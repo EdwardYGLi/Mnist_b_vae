@@ -15,7 +15,7 @@ from torch import nn
 import torch.nn.functional as F
 from torchvision import datasets, transforms
 from torchvision.utils import make_grid
-from src.b_vae import BetaVAE
+from b_vae import BetaVAE
 from torch.utils.tensorboard import SummaryWriter
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -43,6 +43,7 @@ def init_wandb(args, tag):
     wandb.init(project="mnist-VAE", dir="./.wandb/", tags=[tag])
     wandb.tensorboard.patch(save=False, tensorboardX=False)
     wandb.config.update(args)
+
 
 # Reconstruction + KL divergence losses summed over all elements and batch
 def loss_function(recon_x, x, mu, log_var, loss_fn = "mse"):
@@ -121,7 +122,7 @@ def main():
     parser = argparse.ArgumentParser(description='VAE MNIST Example')
     parser.add_argument('--batch-size', type=int, default=128, metavar='N',
                         help='input batch size for training (default: 128)')
-    parser.add_argument('--epochs', type=int, default=20, metavar='N',
+    parser.add_argument('--epochs', type=int, default=100, metavar='N',
                         help='number of epochs to train (default: 10)')
     parser.add_argument('--seed', type=int, default=1, metavar='S',
                         help='random seed (default: 1)')
@@ -141,6 +142,7 @@ def main():
 
     args = parser.parse_args()
     now = datetime.datetime.now()
+    init_wandb(args)
     output_dir = os.path.join(args.output_dir, now.strftime("%Y-%m-%d_%H_%M") + "_vae/")
     os.makedirs(output_dir, exist_ok=True)
     args.cuda = torch.cuda.is_available()

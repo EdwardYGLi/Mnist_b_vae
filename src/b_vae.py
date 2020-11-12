@@ -17,17 +17,17 @@ class Swish(nn.Module):
 class BetaVAE(nn.Module):
 
     activations = {
-        "relu", nn.ReLU,
-        "sigmoid", nn.Sigmoid,
-        "swish", Swish,
-        "tanh", nn.Tanh,
-        "lrelu", nn.LeakyReLU,
-        "Elu" , nn.ELU,
-        "PReLU",nn.PReLU,
+        "relu": nn.ReLU,
+        "sigmoid": nn.Sigmoid,
+        "swish": Swish,
+        "tanh": nn.Tanh,
+        "lrelu": nn.LeakyReLU,
+        "Elu" : nn.ELU,
+        "PReLU":nn.PReLU
     }
 
     def __init__(self, layers, activation = "relu"):
-        super(VAE, self).__init__()
+        super(BetaVAE, self).__init__()
 
         encoders = []
         decoders = []
