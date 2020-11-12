@@ -3,30 +3,28 @@ Created by Edward Li at 11/11/20
 """
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 
 
 class Swish(nn.Module):
     def __init__(self):
-        super(Swish,self).__init__()
+        super(Swish, self).__init__()
 
-    def forward(self,x):
-        return x* F.sigmoid(x)
+    def forward(self, x):
+        return x * torch.sigmoid(x)
 
 
 class BetaVAE(nn.Module):
-
     activations = {
         "relu": nn.ReLU,
         "sigmoid": nn.Sigmoid,
         "swish": Swish,
         "tanh": nn.Tanh,
         "lrelu": nn.LeakyReLU,
-        "Elu" : nn.ELU,
-        "PReLU":nn.PReLU
+        "Elu": nn.ELU,
+        "PReLU": nn.PReLU
     }
 
-    def __init__(self, layers, activation = "relu"):
+    def __init__(self, layers, activation="relu"):
         super(BetaVAE, self).__init__()
 
         encoders = []
